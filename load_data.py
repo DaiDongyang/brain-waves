@@ -13,18 +13,18 @@ filter_l_number = [1, 2, 3]
 
 def load_pair(mat_file_path, label_file_path):
     mat = sio.loadmat(mat_file_path)
-    data = mat['data'].flat
-    instances = list()
+    # data = mat['data'].flat
+    instances = list(mat['data'].reshape((-1, raw_dim)))
     labels = list()
     with open(label_file_path, 'r') as label_f:
         next(label_f)
         i = 0
         for line in label_f:
-            instance = list(data[raw_dim*i:raw_dim * (i + 1)])
+            # instance = list(data[raw_dim*i:raw_dim * (i + 1)])
             label = int(line.strip())
-            instances.append(instance)
+            # instances.append(instance)
             labels.append(label)
-            i += 1
+            # i += 1
     # print(data[i*1000-1])
     return instances, labels
 

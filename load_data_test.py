@@ -42,9 +42,16 @@ def test_filter_data_labels():
     print(np.min(rs))
 
 
+def test_load_data_labels():
+    r_data, r_labels = load_data.load_data_labels(load_data.train_numbers)
+    print(r_data.shape)
+    print(r_labels.shape)
+
+
 if __name__ == '__main__':
+    test_load_data_labels()
     # test_filter_data_labels()
     # test_load_numbered_data()
     # test_get_file_pairs()
-    test_load_pair()
+    # test_load_pair()
     # pass
