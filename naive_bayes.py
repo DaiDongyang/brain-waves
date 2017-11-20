@@ -45,6 +45,7 @@ def naive_bayes_predict(samples, c_list, miu_m, sigma_m, c_probs):
     rows, _ = samples.shape
     for i in range(len(c_list)):
         # ln(p)
+        # todo: forget sigma in the front of exp
         p = np.sum((samples - miu_m[i])**2/(2 * sigma_m[i]**2), axis=1) * np.log(1/c_probs[i])
         p_lists.append(p)
     p_matrix = np.array(p_lists)
