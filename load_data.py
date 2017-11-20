@@ -2,6 +2,9 @@ import scipy.io as sio
 import numpy as np
 import os
 
+# f = 200HZ 傅立叶变换？
+# 1000 维的数据经过傅立叶变幻得到一个新的纬度，然后可以把1000维降到5维，这样我们只考虑6（5+1，1是傅立叶变幻得到的纬度）
+# todo: fft
 
 mats_path = './mats/'
 labels_path = './labels/'
@@ -18,7 +21,7 @@ def load_pair(mat_file_path, label_file_path):
     labels = list()
     with open(label_file_path, 'r') as label_f:
         next(label_f)
-        i = 0
+        # i = 0
         for line in label_f:
             # instance = list(data[raw_dim*i:raw_dim * (i + 1)])
             label = int(line.strip())

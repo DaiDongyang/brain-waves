@@ -1,9 +1,23 @@
 import scipy.io as sio
 import numpy as np
 
+
 # f = 200HZ 傅立叶变换？
 # 1000 维的数据经过傅立叶变幻得到一个新的纬度，然后可以把1000维降到5维，这样我们只考虑6（5+1，1是傅立叶变幻得到的纬度）
-# todo: fft
+# todo: test
+def get_k_freqs(set, fs, k):
+    rows, N = set.shape
+    f = fs * np.arange(1, N+1)/N
+    S_double = np.fft.fft(set, n=N, axis=1)
+    S_single_abs = np.abs(S_double[:, 0: int(N/2)])
+    S_single_argpart = np.argsort(S_single_abs, axis=1)
+    k_max_argpart = S_single_argpart[:, : -1*k-1: -1]
+    idx = (np.arange(rows)*N).reshape(-1, 1) + k_max_argpart
+    idx_flat = idx.flat
+    f_matrix_flat = np.array(list(f)*rows)
+    k_freqs_flat = f_matrix_flat[idx_flat]
+    k_freqs = k_freqs_flat.reshape(-1, k)
+    return k_freqs, S_single_abs, f[0:int(N/2)]
 
 
 def pca_limit_d(train_set, test_set, d):
