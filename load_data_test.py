@@ -35,7 +35,7 @@ def test_load_numbered_data():
 
 def test_filter_data_labels():
     r_datas, r_labels = load_data.load_numbered_data(load_data.test_numbers, load_data.mats_path, load_data.labels_path)
-    datas, rs = load_data.filter_data_labels(r_datas, r_labels, load_data.filter_l_number)
+    datas, rs = load_data.considered_classes(r_datas, r_labels, load_data.filter_l_number)
     print(datas.shape)
     print(rs.shape)
     print(np.max(rs))

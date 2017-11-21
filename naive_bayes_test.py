@@ -2,6 +2,7 @@ import naive_bayes
 import load_data
 import pre_process
 import numpy as np
+import config
 import time
 
 
@@ -23,18 +24,18 @@ def test_trains():
 
 
 def test_naiyes():
-    k_frq = 5
-    d = 10
+    k_frq = 1
+    d = 5
     fs = 200
-    c_list = load_data.filter_l_number
-    train_r_data, train_labels = load_data.load_data_labels(load_data.train_numbers)
-    test_r_data, test_labels = load_data.load_data_labels(load_data.test_numbers)
-    train_frqs, _, _ = pre_process.get_k_freqs(train_r_data, fs, k_frq)
-    test_frqs, _, _, = pre_process.get_k_freqs(test_r_data, fs, k_frq)
+    c_list = config.considered_classes
+    train_r_data, train_labels = load_data.load_data_labels(config.train_numbers)
+    test_r_data, test_labels = load_data.load_data_labels(config.test_numbers, filter_ls=None)
+    # train_frqs, _, _ = pre_process.get_k_freqs(train_r_data, fs, k_frq)
+    # test_frqs, _, _, = pre_process.get_k_freqs(test_r_data, fs, k_frq)
 
-    train_data1, test_data1, loss = pre_process.pca_limit_d(train_r_data, test_r_data, d)
-    train_data = np.hstack((train_data1, train_frqs))
-    test_data = np.hstack((test_data1, test_frqs))
+    train_data, test_data, loss = pre_process.pca_limit_d(train_r_data, test_r_data, d)
+    # train_data = np.hstack((train_data1, train_frqs))
+    # test_data = np.hstack((test_data1, test_frqs))
     miu_m, sigma_m, c_probs = naive_bayes.trains(train_data, train_labels, c_list)
     results = naive_bayes.naive_bayes_predict(test_data, c_list, miu_m, sigma_m, c_probs)
     # for result in results:
