@@ -57,3 +57,7 @@ def pca_limit_loss(train_set, test_set, loss):
     trains = avg_trains.dot(M)
     tests = np.dot((test_set - miu), M)
     return trains, tests, d
+
+
+def concatenate_features(set1, set2):
+    return np.hstack(set1, set2)

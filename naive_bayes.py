@@ -28,15 +28,19 @@ def train_single(subset):
 
 # todo: complete test
 def trains(samples, labels, c_list):
+    c_probs = list()
     miu_m = list()
     sigma_m = list()
+    rows, _ = samples.shape
     for c in c_list:
         idx = labels == c
+        c_prob = np.sum(idx)/rows
         subset = samples[idx, :]
         miu, sigma = train_single(subset)
+        c_probs.append(c_prob)
         miu_m.append(miu)
         sigma_m.append(sigma)
-    return np.array(miu_m), np.array(sigma_m)
+    return np.array(miu_m), np.array(sigma_m), c_probs
 
 
 # todo: test
@@ -44,15 +48,17 @@ def naive_bayes_predict(samples, c_list, miu_m, sigma_m, c_probs):
     p_lists = list()
     rows, _ = samples.shape
     for i in range(len(c_list)):
-        # ln(p)
-        # todo: forget sigma in the front of exp
-        p = np.sum((samples - miu_m[i])**2/(2 * sigma_m[i]**2), axis=1) * np.log(1/c_probs[i])
-        p_lists.append(p)
+        exp = np.sum((samples - miu_m[i])**2/(2 * sigma_m[i]**2), axis=1)
+        sum_log_sigma = np.sum(np.log(sigma_m[i]))
+        p = np.log(c_probs[i]) - sum_log_sigma - exp
+        # print(p.shape)
+        p_lists.append(list(p))
     p_matrix = np.array(p_lists)
-    idx_r = np.argmax(p_matrix, axis=1)
-    idx = zip(range(rows), idx_r)
+    idx_r = np.argmax(p_matrix, axis=0)
     c_matrix = np.array(c_list).repeat(rows).reshape(len(c_list), -1).transpose()
-    results = c_matrix(idx)
+    # print(c_matrix.shape)
+    # print(c_matrix[range(rows), idx_r])
+    results = c_matrix[range(rows), idx_r]
     return results
 
 
