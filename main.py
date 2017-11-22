@@ -45,7 +45,9 @@ if __name__ == '__main__':
     acc = np.sum(check) / len(check)
     t11 = time.time()
     # print(acc)
-
+    for i in check:
+        print(i)
+    # print(check)
     with open(config.result_file, 'w') as outf:
         print('predict result:', file=outf)
         for result in results:

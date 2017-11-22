@@ -8,6 +8,8 @@ def get_k_freqs(set, fs, k):
     f = fs * np.arange(1, N+1)/N
     S_double = np.fft.fft(set, n=N, axis=1)
     S_single_abs = np.abs(S_double[:, 0: int(N/2)])
+
+    # maybe this command takes too much time
     S_single_argpart = np.argsort(S_single_abs, axis=1)
     k_max_argpart = S_single_argpart[:, : -1*k-1: -1]
     idx = (np.arange(rows)*N).reshape(-1, 1) + k_max_argpart
