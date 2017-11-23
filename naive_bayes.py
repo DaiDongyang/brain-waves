@@ -1,5 +1,5 @@
 """
-Bayes Decision
+Naive Bayes Decision
 """
 import numpy as np
 

@@ -87,10 +87,10 @@ if __name__ == '__main__':
         for result in results:
             print(result, file=outf)
 
-    with open(config.gt_file, 'w') as outf:
-        print('ground truth:', file=outf)
+    with open(config.gt_file, 'w') as outf2:
+        print('ground truth:', file=outf2)
         for test_label in test_labels:
-            print(test_label, file=outf)
+            print(test_label, file=outf2)
 
     accuracy, precision, recall, F_1, m_pre, m_rec, m_F1 = result_evaluate(test_labels, results, config.considered_classes)
     t11 = time.time()
