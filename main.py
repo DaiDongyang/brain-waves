@@ -7,7 +7,14 @@ import time
 from collections import defaultdict
 
 
-def result_evaluate(g_ls, r_ls, c_list):
+def result_evaluate(g_ls, r_ls, classes):
+    """
+    evaluate the predict result
+    :param g_ls: the ground truth
+    :param r_ls: the predict result
+    :param classes: a list contains all the related classes
+    :return: accuracy, precision(list), recall(list), F1(list), macro_precision, macro_recall, macro_F1
+    """
     g_ls = g_ls.reshape(-1, 1)
     r_ls = r_ls.reshape(-1, 1)
     check = np.array(g_ls == r_ls)
@@ -24,13 +31,13 @@ def result_evaluate(g_ls, r_ls, c_list):
         trues_dict[g_ls[i]] += 1
         if r_ls[i] == g_ls[i]:
             tps_dict[r_ls[i]] += 1
-    positives = np.zeros(len(c_list))
-    trues = np.zeros(len(c_list))
-    tps = np.zeros(len(c_list))
-    for i in range(len(c_list)):
-        positives[i] = positives_dict[c_list[i]]
-        trues[i] = trues_dict[c_list[i]]
-        tps[i] = tps_dict[c_list[i]]
+    positives = np.zeros(len(classes))
+    trues = np.zeros(len(classes))
+    tps = np.zeros(len(classes))
+    for i in range(len(classes)):
+        positives[i] = positives_dict[classes[i]]
+        trues[i] = trues_dict[classes[i]]
+        tps[i] = tps_dict[classes[i]]
     pre = tps/positives
     rec = tps/trues
     F1 = (2 * pre * rec)/(pre + rec)
@@ -47,7 +54,7 @@ if __name__ == '__main__':
     t1 = time.time()
     c_list = config.considered_classes
     train_r_data, train_labels = load_data.load_data_labels(config.train_numbers)
-    test_r_data, test_labels = load_data.load_data_labels(config.test_numbers, filter_ls=tests_filter_ls)
+    test_r_data, test_labels = load_data.load_data_labels(config.test_numbers, filter_cs=tests_filter_ls)
     t2 = time.time()
     print('Load data take time: ', t2 - t1, 's')
 
@@ -85,13 +92,13 @@ if __name__ == '__main__':
         for test_label in test_labels:
             print(test_label, file=outf)
 
-    acc, pre, rec, F1, macro_pre, macro_rec, macro_F1 = result_evaluate(test_labels, results, config.considered_classes)
+    accuracy, precision, recall, F_1, m_pre, m_rec, m_F1 = result_evaluate(test_labels, results, config.considered_classes)
     t11 = time.time()
     print('Total time: ', t11 - t1, 's')
-    print('Accuracy is', acc)
-    print('precision of', config.considered_classes, 'is:', pre)
-    print('recall of', config.considered_classes, 'is:', rec)
-    print('F1 of', config.considered_classes, 'is:', F1)
-    print('Macro-precision is:', macro_pre)
-    print('Macro-recall is:', macro_rec)
-    print('Macro-F1 is:', macro_F1)
+    print('Accuracy is', accuracy)
+    print('precision of', config.considered_classes, 'is:', precision)
+    print('recall of', config.considered_classes, 'is:', recall)
+    print('F1 of', config.considered_classes, 'is:', F_1)
+    print('Macro-precision is:', m_pre)
+    print('Macro-recall is:', m_rec)
+    print('Macro-F1 is:', m_F1)

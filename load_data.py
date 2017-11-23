@@ -1,3 +1,7 @@
+"""
+load data from mat files and txt files
+by default, the mat file is in the fold 'mats/', the txt file for the label is in the fold 'labels/'
+"""
 import scipy.io as sio
 import numpy as np
 import os
@@ -5,24 +9,37 @@ import config
 
 
 def load_pair(mat_file_path, label_file_path):
+    """
+    load data from a mat file and its corresponding file, for example,
+    this function can be called like "load_pair('./mats/sleep_data_row3_1.mat','./labels/HypnogramAASM_subject1.txt')"
+    :param mat_file_path: the path of mat file
+    :param label_file_path: the path of label(txt) file
+    :return:
+        instances: a list of features (list of list, can be converted into numpy matrix)
+        labels: a list of labels, corresponding to list of features
+    """
     mat = sio.loadmat(mat_file_path)
-    # data = mat['data'].flat
     instances = list(mat['data'].reshape((-1, config.origin_dim)))
     labels = list()
     with open(label_file_path, 'r') as label_f:
         next(label_f)
-        # i = 0
         for line in label_f:
-            # instance = list(data[raw_dim*i:raw_dim * (i + 1)])
             label = int(line.strip())
-            # instances.append(instance)
             labels.append(label)
-            # i += 1
-    # print(data[i*1000-1])
     return instances, labels
 
 
 def get_file_pairs(numbers, mats_fold, labels_fold):
+    """
+    get related mat file and label file
+    :param numbers: a list to identified which file to be considered,
+    if numbers = [1, 2, 3], then the 'sleep_data_row3_1.mat', 'sleep_data_row3_2.mat', 'sleep_data_row3_3.mat' and
+    'HypnogramAASM_subject1.txt', 'HypnogramAASM_subject2.txt', 'HypnogramAASM_subject3.txt' will be considered,
+    and other file will be ignored
+    :param mats_fold: the path of mat fold, the mat file (such as sleep_data_row3_2.mat) is in the fold
+    :param labels_fold: the path of labels fold, the label file (such as HypnogramAASM_subject2.txt) is in the fold
+    :return: return type is [(mat_file_path, labels_file_path)], a list of tuples
+    """
     mat_files = os.listdir(mats_fold)
     label_files = os.listdir(labels_fold)
     results = []
@@ -42,6 +59,20 @@ def get_file_pairs(numbers, mats_fold, labels_fold):
 
 
 def load_numbered_data(numbers, mats_fold, labels_fold):
+    """
+    load data from mat fold and labels fold
+    :param numbers: a list to identified which file to be considered,
+    if numbers = [1, 2, 3], then the 'sleep_data_row3_1.mat', 'sleep_data_row3_2.mat', 'sleep_data_row3_3.mat' and
+    'HypnogramAASM_subject1.txt', 'HypnogramAASM_subject2.txt', 'HypnogramAASM_subject3.txt' will be considered,
+    and other file will be ignored
+    :param mats_fold: fold path of mat files
+    :param labels_fold: fold path of labels files
+    :return:
+        the first element to return is a m*n matrix (numpy 2-d array), which means the training data (or test data)
+        has m instances, and every instance has n features
+        the second element to return is a array (numpy array) with m elements, each element is corresponding to a row of
+        the first element to return.
+    """
     data = []
     labels = []
     pairs = get_file_pairs(numbers, mats_fold, labels_fold)
@@ -52,19 +83,42 @@ def load_numbered_data(numbers, mats_fold, labels_fold):
     return np.array(data), np.array(labels)
 
 
-def considered_classes(data, labels, filter_ls):
-    if filter_ls is None:
+def filter_classes(data, labels, filter_cs):
+    """
+    filter the data and labels according to filter_cs.
+    :param data: a m*n matrix, which means data has m instances and every instance has n features
+    :param labels: array with m elements, corresponding to data, data[i, :]'s label is labels[i]
+    :param filter_cs: a list, identify the classes to be considered, if filter_cs is [1, 2, 3], we only consider data
+        with label '1', '2' or '3'. and ignore data with other kinds of labels
+    :return: data and labels after filtering
+    """
+    if filter_cs is None:
         return data, labels
     filtered_data = []
     filtered_labels = []
-    for l in filter_ls:
+    for l in filter_cs:
         check = (labels == l)
         filtered_data = filtered_data + list(data[check, :])
         filtered_labels = filtered_labels + list(labels[check])
     return np.array(filtered_data), np.array(filtered_labels)
 
 
-def load_data_labels(numbers, mats_fold=config.mats_path, labels_fold=config.labels_path, filter_ls=config.considered_classes):
+def load_data_labels(numbers, mats_fold=config.mats_path, labels_fold=config.labels_path,
+                     filter_cs=config.considered_classes):
+    """
+    load data from files
+    :param numbers: a list to identified which file to be considered,
+    if numbers = [1, 2, 3], then the 'sleep_data_row3_1.mat', 'sleep_data_row3_2.mat', 'sleep_data_row3_3.mat' and
+    'HypnogramAASM_subject1.txt', 'HypnogramAASM_subject2.txt', 'HypnogramAASM_subject3.txt' will be considered,
+    and other file will be ignored
+    :param mats_fold: fold path of mat files
+    :param labels_fold: fold path of labels(txt) files
+    :param filter_cs: a list, identify the classes to be considered, if filter_cs is [1, 2, 3], we only consider data
+        with label '1', '2' or '3'. and ignore data with other kinds of labels
+    :return:
+        data: a m*n matrix, which means data has m instances and every instance has n features
+        labels: array with m elements, corresponding to data, data[i, :]'s label is labels[i]
+    """
     r_data, r_labels = load_numbered_data(numbers, mats_fold, labels_fold)
-    data, labels = considered_classes(r_data, r_labels, filter_ls)
+    data, labels = filter_classes(r_data, r_labels, filter_cs)
     return data, labels

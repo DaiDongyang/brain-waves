@@ -1,4 +1,6 @@
-# configuration
+"""
+configuration
+"""
 
 # the path of mat fold
 mats_path = './mats/'
