@@ -44,8 +44,8 @@ def pca_limit_d(train_set, test_set, d):
     _, old_d = train_set.shape
     if d >= old_d:
         return train_set, test_set, 0
-    miu = np.average(train_set, axis=0)
-    avg_trains = train_set - miu
+    mu = np.average(train_set, axis=0)
+    avg_trains = train_set - mu
     cov = np.cov(avg_trains.T)
     c_roots, Q = np.linalg.eig(cov)
     c_roots = c_roots.real
@@ -54,7 +54,7 @@ def pca_limit_d(train_set, test_set, d):
     M = Q[:, idxs]
     loss = 1 - np.sum(c_roots[idxs])/np.sum(c_roots)
     trains = avg_trains.dot(M)
-    tests = np.dot((test_set - miu), M)
+    tests = np.dot((test_set - mu), M)
     return trains, tests, loss
 
 
@@ -69,8 +69,8 @@ def pca_limit_loss(train_set, test_set, loss):
         tests: new test set, k*d matrix
         loss: the target dimension to reduce
     """
-    miu = np.average(train_set, axis=0)
-    avg_trains = train_set - miu
+    mu = np.average(train_set, axis=0)
+    avg_trains = train_set - mu
     cov = np.cov(avg_trains.T)
     c_roots, Q = np.linalg.eig(cov)
     c_roots = c_roots.real
@@ -87,5 +87,5 @@ def pca_limit_loss(train_set, test_set, loss):
     M = Q[:, idxs[:i+1]]
     d = i
     trains = avg_trains.dot(M)
-    tests = np.dot((test_set - miu), M)
+    tests = np.dot((test_set - mu), M)
     return trains, tests, d
