@@ -43,6 +43,10 @@ def get_file_pairs(numbers, mats_fold, labels_fold):
     mat_files = os.listdir(mats_fold)
     label_files = os.listdir(labels_fold)
     results = []
+    if len(mat_files) == 0:
+        raise Exception("Please put mat files under " + config.mats_path)
+    if len(label_files) == 0:
+        raise Exception("Please put label files under " + config.labels_path)
     for i in numbers:
         pair = []
         for mat_file in mat_files:
