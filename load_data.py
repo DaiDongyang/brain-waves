@@ -50,11 +50,11 @@ def get_file_pairs(numbers, mats_fold, labels_fold):
     for i in numbers:
         pair = []
         for mat_file in mat_files:
-            mat_key = 'row3_' + str(i)
+            mat_key = 'row3_' + str(i) + '.mat'
             if mat_key in mat_file:
                 pair.append(os.path.join(mats_fold, mat_file))
         for label_file in label_files:
-            label_key = 'subject' + str(i)
+            label_key = 'subject' + str(i) + '.txt'
             if label_key in label_file:
                 pair.append(os.path.join(labels_fold, label_file))
         if len(pair) == 2:
@@ -80,6 +80,7 @@ def load_numbered_data(numbers, mats_fold, labels_fold):
     data = []
     labels = []
     pairs = get_file_pairs(numbers, mats_fold, labels_fold)
+    # print(pairs)
     for item in pairs:
         instances, ls = load_pair(item[0], item[1])
         data = data + instances

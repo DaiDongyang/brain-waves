@@ -4,47 +4,7 @@ import load_data
 import pre_process
 import numpy as np
 import time
-from collections import defaultdict
-
-
-def result_evaluate(g_ls, r_ls, classes):
-    """
-    evaluate the predict result
-    :param g_ls: the ground truth
-    :param r_ls: the predict result
-    :param classes: a list contains all the related classes
-    :return: accuracy, precision(list), recall(list), F1(list), macro_precision, macro_recall, macro_F1
-    """
-    g_ls = g_ls.reshape(-1, 1)
-    r_ls = r_ls.reshape(-1, 1)
-    check = np.array(g_ls == r_ls)
-    total_num = g_ls.size
-    acc = np.sum(check) / total_num
-
-    g_ls = list(g_ls.flat)
-    r_ls = list(r_ls.flat)
-    tps_dict = defaultdict(lambda: 0)
-    positives_dict = defaultdict(lambda: 0)
-    trues_dict = defaultdict(lambda: 0)
-    for i in range(total_num):
-        positives_dict[r_ls[i]] += 1
-        trues_dict[g_ls[i]] += 1
-        if r_ls[i] == g_ls[i]:
-            tps_dict[r_ls[i]] += 1
-    positives = np.zeros(len(classes))
-    trues = np.zeros(len(classes))
-    tps = np.zeros(len(classes))
-    for i in range(len(classes)):
-        positives[i] = positives_dict[classes[i]]
-        trues[i] = trues_dict[classes[i]]
-        tps[i] = tps_dict[classes[i]]
-    pre = tps/positives
-    rec = tps/trues
-    F1 = (2 * pre * rec)/(pre + rec)
-    macro_pre = np.average(pre)
-    macro_rec = np.average(rec)
-    macro_F1 = (2 * macro_pre * macro_rec)/(macro_pre + macro_rec)
-    return acc, pre, rec, F1, macro_pre, macro_rec, macro_F1
+import evaluate
 
 
 if __name__ == '__main__':
@@ -92,7 +52,7 @@ if __name__ == '__main__':
         for test_label in test_labels:
             print(test_label, file=outf2)
 
-    accuracy, precision, recall, F_1, m_pre, m_rec, m_F1 = result_evaluate(test_labels, results, config.considered_classes)
+    accuracy, precision, recall, F_1, m_pre, m_rec, m_F1 = evaluate.result_evaluate(test_labels, results, config.considered_classes)
     t11 = time.time()
     print('Total time: ', t11 - t1, 's')
     print('Accuracy is', accuracy)

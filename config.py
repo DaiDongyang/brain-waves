@@ -16,6 +16,7 @@ origin_dim = 1000
 # 'HypnogramAASM_subject1.txt', 'HypnogramAASM_subject2.txt', 'HypnogramAASM_subject3.txt' will be treat as train set
 # and train set
 train_numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]  # list(range(1,20))
+# train_numbers = [1, 2]
 
 # the list named 'test_numbers' is used to identify the test set
 test_numbers = [20]
