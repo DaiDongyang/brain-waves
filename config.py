@@ -34,7 +34,7 @@ freq_k = 1
 fs = 200
 
 # The target dimension to reduce for PCA process
-d = 5
+d = 10
 
 # The name of file to save predict result
 result_file = 'result.txt'
