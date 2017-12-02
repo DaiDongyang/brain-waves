@@ -103,7 +103,9 @@ def svm_run_evaluate(kernel, C, gamma):
     gr_predicts = list()
     gr_predicts.append(test_labels)
     gr_predicts.append(train_labels)
-    with open('gr_predicts.pickle', 'rb') as gr_predicts_f:
+
+    pickle_name = 'gr_predicts_' + str(kernel) + '_' + str(C) + '_' + str(gamma) + '.pickle'
+    with open(pickle_name, 'wb') as gr_predicts_f:
         pickle.dump(gr_predicts, gr_predicts_f)
 
     predict_filename = 'predict_results_' + str(kernel) + '_' + str(C) + '_' + str(gamma) + '.txt'
@@ -131,8 +133,9 @@ def svm_run_evaluate(kernel, C, gamma):
 
 
 if __name__ == '__main__':
-    best_combine_, _ = grid_run_and_save()
-    # acc, kernel, C, gamma = best_combine
-    # best_combine_ = (0.77497900923593621, 'rbf', 1.6681005372000592, 2.2758459260747865e-05)
-    svm_run_evaluate(best_combine_[1], best_combine_[2], best_combine_[3])
+    # best_combine_, _ = grid_run_and_save()
+    # # acc, kernel, C, gamma = best_combine
+    # svm_run_evaluate(best_combine_[1], best_combine_[2], best_combine_[3])
+    svm_run_evaluate('rbf', 2, 2e-05)
+
 
