@@ -42,7 +42,7 @@ def grid_run_svm(train_set, train_ls, test_set, test_ls, kernel, Cs, gammas):
 
 def grid_run_and_save():
     C_range = np.logspace(-2, 2, 10)
-    gamma_range = np.logspace(-10, 5, 14)
+    gamma_range = np.logspace(-10, 5, 15)
     kernels = ['rbf', 'poly', 'sigmoid']
     extract_start = 1  # random set, not special require
     extract_step = 200
@@ -56,9 +56,12 @@ def grid_run_and_save():
     train_data = pca.transform(train_data)
     test_data = pca.transform(test_r_data)
     results_dict = defaultdict(lambda _: None)
+    best_combine = (0, None, None, None)
     for kernel_ in kernels:
         results_ = grid_run_svm(train_data, train_labels, test_data, test_labels, kernel_, C_range, gamma_range)
         results_dict[kernel_] = results_
+        if results_[0][0] > best_combine[0]:
+            best_combine = (results_[0][0], kernel_, results_[0][1], results_[0][2])
 
     pickle_name = 'acc_params_dict_step' + str(extract_step) + '.pickle'
     with open(pickle_name, 'wb') as pickle_file:
@@ -75,23 +78,34 @@ def grid_run_and_save():
             print()
             print(file=outf)
         t2 = time.time()
-        print('run time:', t2 - t1)
-        print('run time:', t2 - t1, file=outf)
+        print('run time(grid):', t2 - t1)
+        print('run time(grid):', t2 - t1, file=outf)
+    return best_combine, results_dict
 
 
 def svm_run_evaluate(kernel, C, gamma):
+    if (kernel is None) or (C is None) or (gamma is None):
+        return
     t1 = time.time()
     clf = SVC(kernel=kernel, C=C, gamma=gamma)
     pca = PCA(n_components=config.d)
     train_r_data, train_labels = load_data.load_data_labels(config.train_numbers)
     test_r_data, test_labels = load_data.load_data_labels(config.test_numbers)
+
     pca.fit(train_r_data, train_labels)
     train_data = pca.transform(train_r_data)
     test_data = pca.transform(test_r_data)
+
     clf.fit(train_data, train_labels)
     results = clf.predict(test_data)
-    acc, pre, rec, F1, macro_pre, macro_rec, macro_F1 = evaluate.result_evaluate(train_labels, results,
-                                                                                 config.considered_classes)
+    t2 = time.time()
+    print('single svm(all instances) total time:', t2 - t1)
+    gr_predicts = list()
+    gr_predicts.append(test_labels)
+    gr_predicts.append(train_labels)
+    with open('gr_predicts.pickle', 'rb') as gr_predicts_f:
+        pickle.dump(gr_predicts, gr_predicts_f)
+
     predict_filename = 'predict_results_' + str(kernel) + '_' + str(C) + '_' + str(gamma) + '.txt'
     with open(predict_filename, 'w') as predict_f:
         print('predict result:', file=predict_f)
@@ -100,11 +114,13 @@ def svm_run_evaluate(kernel, C, gamma):
 
     ground_truth_filename = 'ground_truth.txt'
     with open(ground_truth_filename, 'w') as gr_f:
-        print('ground truth:')
+        print('ground truth:', file=gr_f)
         for label in test_labels:
             print(label, file=gr_f)
-    t2 = time.time()
-    print('total time:', t2 - t1)
+
+    acc, pre, rec, F1, macro_pre, macro_rec, macro_F1 = evaluate.result_evaluate(test_labels, results,
+                                                                                 config.considered_classes)
+
     print('Accuracy is', acc)
     print('precision of', config.considered_classes, 'is:', pre)
     print('recall of', config.considered_classes, 'is:', rec)
@@ -115,5 +131,8 @@ def svm_run_evaluate(kernel, C, gamma):
 
 
 if __name__ == '__main__':
-    # grid_run_and_save()
-    svm_run_evaluate('rbf', 1, 1e-5)
+    best_combine_, _ = grid_run_and_save()
+    # acc, kernel, C, gamma = best_combine
+    # best_combine_ = (0.77497900923593621, 'rbf', 1.6681005372000592, 2.2758459260747865e-05)
+    svm_run_evaluate(best_combine_[1], best_combine_[2], best_combine_[3])
+
