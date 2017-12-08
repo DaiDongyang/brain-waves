@@ -7,11 +7,7 @@ import time
 import numpy as np
 from collections import defaultdict
 import pickle
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-import matplotlib.pyplot as pyplot
 
-
-# def lda_reduce()
 
 def extract_trains(train_set, labels, step, start):
     """
@@ -28,6 +24,20 @@ def extract_trains(train_set, labels, step, start):
 
 
 def grid_run_svm(train_set, train_ls, test_set, test_ls, kernel, Cs, gammas):
+    """
+    To test the accuracy of all combinations of parameters C and gamma (The Cartesian Product of Cs and gammas) with
+    a specified kernel function.
+    :param train_set: train set
+    :param train_ls: train labels
+    :param test_set: test set
+    :param test_ls: test labels
+    :param kernel: kernel function, should be 'rbf', 'poly' or 'sigmoid'
+    :param Cs: a list of parameter C, C represents the degree of tolerance for misclassified samples.
+    :param gammas: a list of parameter gamma, gamma is the parameter for kernel function.
+    :return:
+        type: [(accuracy, C, gamma)],
+        returns a list of combination of parameter and its accuracy, and this list is sorted by accuracy.
+    """
     rs = []
     for C in Cs:
         for gamma in gammas:
@@ -40,9 +50,17 @@ def grid_run_svm(train_set, train_ls, test_set, test_ls, kernel, Cs, gammas):
     return sorted(rs, key=lambda item: item[0], reverse=True)
 
 
-def grid_run_and_save():
-    C_range = np.logspace(-2, 2, 10)
-    gamma_range = np.logspace(-10, 5, 15)
+def grid_run_and_save(C_range, gamma_range):
+    """
+    to test the accuracy of all the combination of parameters with all kinds of kernel('rbf', 'sigmoid', 'poly')
+    :return:
+        (best_parameter, dict_of_all_parameters_and accuracy)
+        the first return element is best combination of parameter. best_combine = (acc, kernel, C, gamma)
+        the second return element is a dict of all the parameters and accuracy, the key of the dict is kernel string,
+            the value of the dict is list of type [(accuracy, C, gamma)], sorted by accuracy.
+    """
+    # C_range = np.logspace(-2, 2, 10)
+    # gamma_range = np.logspace(-10, 5, 15)
     kernels = ['rbf', 'poly', 'sigmoid']
     extract_start = 1  # random set, not special require
     extract_step = 200
@@ -84,6 +102,12 @@ def grid_run_and_save():
 
 
 def svm_run_evaluate(kernel, C, gamma):
+    """
+    evaluate the perfermance of a kind combination of parameters
+    :param kernel: kernel function, should be 'rbf', 'sigmoid' or 'poly'
+    :param C:   parameter C
+    :param gamma: parameter gamma
+    """
     if (kernel is None) or (C is None) or (gamma is None):
         return
     t1 = time.time()
@@ -133,9 +157,8 @@ def svm_run_evaluate(kernel, C, gamma):
 
 
 if __name__ == '__main__':
-    # best_combine_, _ = grid_run_and_save()
-    # # acc, kernel, C, gamma = best_combine
-    # svm_run_evaluate(best_combine_[1], best_combine_[2], best_combine_[3])
-    svm_run_evaluate('rbf', 2, 2e-05)
-
-
+    C_range = np.logspace(-2, 2, 10)
+    gamma_range = np.logspace(-10, 5, 15)
+    best_combine_, _ = grid_run_and_save()
+    # acc, kernel, C, gamma = best_combine
+    svm_run_evaluate(best_combine_[1], best_combine_[2], best_combine_[3])
