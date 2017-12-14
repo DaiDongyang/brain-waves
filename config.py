@@ -58,3 +58,5 @@ ds = [1000, 512, 256, 54, 3]
 keep_probs = [0.5, 0.5, 0.5]
 
 learning_rate = 0.001
+
+print_interval = 100

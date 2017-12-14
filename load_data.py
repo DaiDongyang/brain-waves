@@ -127,3 +127,21 @@ def load_data_labels(numbers, mats_fold=config.mats_path, labels_fold=config.lab
     r_data, r_labels = load_numbered_data(numbers, mats_fold, labels_fold)
     data, labels = filter_classes(r_data, r_labels, filter_cs)
     return data, labels
+
+
+# add for exprienment 3, neural network
+def convert_y_1hot(y, classes):
+    classes_num = len(classes)
+    sample_num = len(y)
+    new_y = np.zeros((sample_num, classes_num))
+    for i, c in zip(range(classes_num), classes):
+        idx = (y == c)
+        new_y[:, i][idx] = 1
+    return new_y
+
+
+def load_data_1hot(numbers, mats_fold=config.mats_path, labels_fold=config.labels_path,
+                   filter_cs=config.considered_classes):
+    data, y1 = load_data_labels(numbers, mats_fold=mats_fold, labels_fold=labels_fold, filter_cs=filter_cs)
+    y = convert_y_1hot(y1, filter_cs)
+    return data, y

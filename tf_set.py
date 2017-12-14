@@ -30,5 +30,11 @@ class TFSet:
         batch_idx = self.idx[iidx]
         return self.data[batch_idx], self.labels[batch_idx], is_epoch_end
 
+    def shuffle_data(self):
+        return self.data[self.idx]
+
+    def shuffle_labels(self):
+        return self.labels[self.idx]
+
 
 
