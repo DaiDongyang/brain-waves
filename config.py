@@ -41,3 +41,20 @@ result_file = 'result.txt'
 
 # The name of file to save ground truth
 gt_file = 'ground_truth.txt'
+
+
+####################################################
+# config for neural network
+####################################################
+
+visible_device = '2'
+
+batch_size = 200
+
+epoch_num = 100
+
+ds = [1000, 512, 256, 54, 3]
+
+keep_probs = [0.5, 0.5, 0.5]
+
+learning_rate = 0.001
