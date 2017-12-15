@@ -6,7 +6,10 @@ import config
 import tempfile
 import post_process
 import sys
+import os
 
+
+os.environ['CUDA_VISIBLE_DEVICE'] = config.visible_device
 
 def deep_nn(x):
     with tf.name_scope('reshape'):

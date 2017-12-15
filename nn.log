@@ -1,0 +1,100 @@
+nohup: ignoring input
+2017-12-15 19:27:52.719303: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Found device 0 with properties: 
+name: GeForce GTX 1080 major: 6 minor: 1 memoryClockRate(GHz): 1.797
+pciBusID: 0000:02:00.0
+totalMemory: 7.92GiB freeMemory: 74.00MiB
+2017-12-15 19:27:53.023833: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Found device 1 with properties: 
+name: GeForce GTX 1080 major: 6 minor: 1 memoryClockRate(GHz): 1.797
+pciBusID: 0000:03:00.0
+totalMemory: 7.92GiB freeMemory: 278.00MiB
+2017-12-15 19:27:53.348221: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Found device 2 with properties: 
+name: GeForce GTX 1080 major: 6 minor: 1 memoryClockRate(GHz): 1.797
+pciBusID: 0000:82:00.0
+totalMemory: 7.92GiB freeMemory: 278.00MiB
+2017-12-15 19:27:53.649223: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Found device 3 with properties: 
+name: GeForce GTX 1080 major: 6 minor: 1 memoryClockRate(GHz): 1.797
+pciBusID: 0000:83:00.0
+totalMemory: 7.92GiB freeMemory: 7.80GiB
+2017-12-15 19:27:53.650081: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1045] Device peer to peer matrix
+2017-12-15 19:27:53.650159: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1051] DMA: 0 1 2 3 
+2017-12-15 19:27:53.650168: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1061] 0:   Y Y N N 
+2017-12-15 19:27:53.650172: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1061] 1:   Y Y N N 
+2017-12-15 19:27:53.650175: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1061] 2:   N N Y Y 
+2017-12-15 19:27:53.650179: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1061] 3:   N N Y Y 
+2017-12-15 19:27:53.650188: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1120] Creating TensorFlow device (/device:GPU:0) -> (device: 0, name: GeForce GTX 1080, pci bus id: 0000:02:00.0, compute capability: 6.1)
+2017-12-15 19:27:53.650193: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1120] Creating TensorFlow device (/device:GPU:1) -> (device: 1, name: GeForce GTX 1080, pci bus id: 0000:03:00.0, compute capability: 6.1)
+2017-12-15 19:27:53.650197: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1120] Creating TensorFlow device (/device:GPU:2) -> (device: 2, name: GeForce GTX 1080, pci bus id: 0000:82:00.0, compute capability: 6.1)
+2017-12-15 19:27:53.650201: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1120] Creating TensorFlow device (/device:GPU:3) -> (device: 3, name: GeForce GTX 1080, pci bus id: 0000:83:00.0, compute capability: 6.1)
+2017-12-15 19:27:53.652186: E tensorflow/stream_executor/cuda/cuda_driver.cc:936] failed to allocate 74.00M (77594624 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY
+2017-12-15 19:27:54.003104: E tensorflow/stream_executor/cuda/cuda_blas.cc:366] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2017-12-15 19:27:54.006525: E tensorflow/stream_executor/cuda/cuda_blas.cc:366] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2017-12-15 19:27:54.009524: E tensorflow/stream_executor/cuda/cuda_blas.cc:366] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2017-12-15 19:27:54.012444: E tensorflow/stream_executor/cuda/cuda_blas.cc:366] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2017-12-15 19:27:54.015580: E tensorflow/stream_executor/cuda/cuda_blas.cc:366] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2017-12-15 19:27:54.018201: E tensorflow/stream_executor/cuda/cuda_blas.cc:366] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2017-12-15 19:27:54.021113: E tensorflow/stream_executor/cuda/cuda_blas.cc:366] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2017-12-15 19:27:54.023720: E tensorflow/stream_executor/cuda/cuda_blas.cc:366] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2017-12-15 19:27:54.026507: E tensorflow/stream_executor/cuda/cuda_blas.cc:366] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2017-12-15 19:27:54.028975: E tensorflow/stream_executor/cuda/cuda_blas.cc:366] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2017-12-15 19:27:54.031673: E tensorflow/stream_executor/cuda/cuda_blas.cc:366] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2017-12-15 19:27:54.034165: E tensorflow/stream_executor/cuda/cuda_blas.cc:366] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2017-12-15 19:27:54.038504: E tensorflow/stream_executor/cuda/cuda_blas.cc:366] failed to create cublas handle: CUBLAS_STATUS_NOT_INITIALIZED
+2017-12-15 19:27:54.038544: W tensorflow/stream_executor/stream.cc:1901] attempting to perform BLAS operation using StreamExecutor without BLAS support
+Saving graph to: /tmp/tmp4j_4z9vt
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 1323, in _do_call
+    return fn(*args)
+  File "/usr/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 1302, in _run_fn
+    status, run_metadata)
+  File "/usr/lib/python3.6/site-packages/tensorflow/python/framework/errors_impl.py", line 473, in __exit__
+    c_api.TF_GetCode(self.status.status))
+tensorflow.python.framework.errors_impl.InternalError: Blas GEMM launch failed : a.shape=(500, 1000), b.shape=(1000, 512), m=500, n=512, k=1000
+	 [[Node: fc1/MatMul = MatMul[T=DT_FLOAT, transpose_a=false, transpose_b=false, _device="/job:localhost/replica:0/task:0/device:GPU:0"](reshape/Reshape, fc1/Variable/read)]]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "nn.py", line 190, in <module>
+    tf.app.run(main=main, argv=[sys.argv[0]])
+  File "/usr/lib/python3.6/site-packages/tensorflow/python/platform/app.py", line 48, in run
+    _sys.exit(main(_sys.argv[:1] + flags_passthrough))
+  File "nn.py", line 112, in main
+    p3: config.keep_probs[2]
+  File "/usr/lib/python3.6/site-packages/tensorflow/python/framework/ops.py", line 2042, in run
+    _run_using_default_session(self, feed_dict, self.graph, session)
+  File "/usr/lib/python3.6/site-packages/tensorflow/python/framework/ops.py", line 4490, in _run_using_default_session
+    session.run(operation, feed_dict)
+  File "/usr/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 889, in run
+    run_metadata_ptr)
+  File "/usr/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 1120, in _run
+    feed_dict_tensor, options, run_metadata)
+  File "/usr/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 1317, in _do_run
+    options, run_metadata)
+  File "/usr/lib/python3.6/site-packages/tensorflow/python/client/session.py", line 1336, in _do_call
+    raise type(e)(node_def, op, message)
+tensorflow.python.framework.errors_impl.InternalError: Blas GEMM launch failed : a.shape=(500, 1000), b.shape=(1000, 512), m=500, n=512, k=1000
+	 [[Node: fc1/MatMul = MatMul[T=DT_FLOAT, transpose_a=false, transpose_b=false, _device="/job:localhost/replica:0/task:0/device:GPU:0"](reshape/Reshape, fc1/Variable/read)]]
+
+Caused by op 'fc1/MatMul', defined at:
+  File "nn.py", line 190, in <module>
+    tf.app.run(main=main, argv=[sys.argv[0]])
+  File "/usr/lib/python3.6/site-packages/tensorflow/python/platform/app.py", line 48, in run
+    _sys.exit(main(_sys.argv[:1] + flags_passthrough))
+  File "nn.py", line 73, in main
+    y, p1, p2, p3 = deep_nn(x)
+  File "nn.py", line 21, in deep_nn
+    h1 = tf.nn.relu(tf.matmul(h0, w1) + b1)
+  File "/usr/lib/python3.6/site-packages/tensorflow/python/ops/math_ops.py", line 1891, in matmul
+    a, b, transpose_a=transpose_a, transpose_b=transpose_b, name=name)
+  File "/usr/lib/python3.6/site-packages/tensorflow/python/ops/gen_math_ops.py", line 2437, in _mat_mul
+    name=name)
+  File "/usr/lib/python3.6/site-packages/tensorflow/python/framework/op_def_library.py", line 787, in _apply_op_helper
+    op_def=op_def)
+  File "/usr/lib/python3.6/site-packages/tensorflow/python/framework/ops.py", line 2956, in create_op
+    op_def=op_def)
+  File "/usr/lib/python3.6/site-packages/tensorflow/python/framework/ops.py", line 1470, in __init__
+    self._traceback = self._graph._extract_stack()  # pylint: disable=protected-access
+
+InternalError (see above for traceback): Blas GEMM launch failed : a.shape=(500, 1000), b.shape=(1000, 512), m=500, n=512, k=1000
+	 [[Node: fc1/MatMul = MatMul[T=DT_FLOAT, transpose_a=false, transpose_b=false, _device="/job:localhost/replica:0/task:0/device:GPU:0"](reshape/Reshape, fc1/Variable/read)]]
+

@@ -47,7 +47,7 @@ gt_file = 'ground_truth.txt'
 # below config for neural network
 ####################################################
 
-visible_device = '2'
+visible_device = '3'
 
 batch_size = 500
 
