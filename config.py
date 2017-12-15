@@ -44,19 +44,27 @@ gt_file = 'ground_truth.txt'
 
 
 ####################################################
-# config for neural network
+# below config for neural network
 ####################################################
 
 visible_device = '2'
 
-batch_size = 200
+batch_size = 500
 
-epoch_num = 100
+epoch_num = 100000
 
 ds = [1000, 512, 256, 54, 3]
 
 keep_probs = [0.5, 0.5, 0.5]
 
-learning_rate = 0.001
+learning_rate = 0.0001
 
-print_interval = 100
+print_interval = 1000
+
+gt_pickle = './pickles/gt.pickle'
+pr_pickle = './pickles/pr.pickle'
+
+eval_train_interval = 3
+save_checkpoint_interval = 100
+
+checkpoint_file = './my-model/my-model'
