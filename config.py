@@ -57,14 +57,14 @@ ds = [1000, 512, 256, 54, 3]
 
 keep_probs = [0.5, 0.5, 0.5]
 
-learning_rate = 0.0001
+learning_rate = 0.01
 
 print_interval = 1000
 
 gt_pickle = './pickles/gt.pickle'
 pr_pickle = './pickles/pr.pickle'
 
-eval_train_interval = 3
+eval_train_interval = 20
 save_checkpoint_interval = 100
 
 checkpoint_file = './my-model/my-model'
