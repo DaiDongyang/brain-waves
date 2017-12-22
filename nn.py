@@ -11,6 +11,7 @@ import os
 
 os.environ["CUDA_VISIBLE_DEVICES"] = config.visible_device
 
+
 def deep_nn(x):
     with tf.name_scope('reshape'):
         h0 = tf.reshape(x, [-1, config.ds[0]])
